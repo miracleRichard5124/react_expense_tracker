@@ -49,7 +49,7 @@ const Login = () => {
             <Inputs 
               type="password" 
               value={password}
-              onChange={({target}) => setEmail(target.value)}
+              onChange={({target}) => setPassword(target.value)}
               label="password"
               placeholder="At least 8 Characters"
             />
