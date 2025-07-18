@@ -15,7 +15,30 @@ const SignUp = () => {
 
   const navigate = useNavigate();
 
-  const handleSignUp = (e) => {};
+  const handleSignUp = (e) => {
+    e.preventDefault();
+
+    let profileImageUrl = "";
+
+    if(!fullName){
+      setError("Please enter your name!");
+      return;
+    }
+
+    if(!validateEmail(email)){
+      setError("Please enter a valid email address!");
+      return;
+    }
+
+    if(!password){
+      setError("Please create a password to protect your Account");
+      return;
+    }
+
+    setError("");
+
+    //SignUp API is called
+  };
 
   return (
     <AuthLayout>
@@ -26,8 +49,7 @@ const SignUp = () => {
         </p>
 
         <form onSubmit={handleSignUp}>
-
-          <ProfilePhotoSelector image={profilePic} setImage={setProfilePic}/>
+          <ProfilePhotoSelector image={profilePic} setImage={setProfilePic} />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Inputs
@@ -56,6 +78,18 @@ const SignUp = () => {
               />
             </div>
           </div>
+
+          {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+
+          <button type="submit" className="btn-primary">
+            SIGN UP
+          </button>
+          <p className="text-[13px] text-slate-800 mt-3">
+            Already have an Account?{" "}
+            <Link className="font-medium text-primary underline" to="/login">
+              Login
+            </Link>
+          </p>
         </form>
       </div>
     </AuthLayout>

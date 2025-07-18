@@ -20,6 +20,8 @@ const Login = () => {
     }
 
     setError("")
+
+    //Login API is called
   };
 
   const [email, setEmail] = useState("");
