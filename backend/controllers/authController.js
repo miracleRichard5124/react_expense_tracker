@@ -22,7 +22,7 @@ exports.registerUser = async (req, res) => {
     //Check if the email already exists in the database
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "User already exists!" });
+      return res.status(400).json({ message: "Email already in Use." });
     }
 
     //Create the New User
@@ -54,7 +54,7 @@ exports.loginUser = async (req, res) => {
 
   try{
     const user = await User.findOne({email});
-    if(!user || !(user.comparePassword(password))){
+    if(!user || !(await user.comparePassword(password))){
       return res.status(400).json({message: "Invalid credentials!"});
     }
 
