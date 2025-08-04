@@ -17,6 +17,7 @@ const Inputs = ({value, onChange, label, placeholder, type}) => {
           type={ type == 'password' ? showPassword ? 'text' : 'password' : type }
           placeholder={placeholder}
           className='w-full bg-transparent outline-none'
+          autoComplete='current-password'
           value={value}
           onChange={(e) => onChange(e)}
         />
