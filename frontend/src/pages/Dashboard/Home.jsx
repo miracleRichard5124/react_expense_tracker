@@ -28,7 +28,6 @@ const Home = () => {
       );
 
       if (response.data) {
-        console.log(response.data);
         setDashboardData(response.data.data);
       }
     } catch (error) {
@@ -54,7 +53,7 @@ const Home = () => {
   return (
     <DashboardLayout activeMenu="Dashboard">
       <div className="my-5 mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <InfoCard
             icon={<IoMdCard />}
             color="bg-primary"
@@ -73,12 +72,18 @@ const Home = () => {
             label="Total Expense"
             value={addThousandSeperator(dashboardData.totalExpense)}
           />
-        </div>
+        </div> */}
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
           <RecentTransactions
             transactions={dashboardData?.recentTransactions}
             onSeeMore={() => navigate('/expense')}
+          />
+
+          <FinanceOverview
+            totalBalance={dashboardData?.totalBalance}
+            totalIncome={dashboardData?.totalIncome}
+            totalExpense={dashboardData?.totalExpense}
           />
         </div>
       </div>
