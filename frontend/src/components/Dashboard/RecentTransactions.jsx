@@ -19,7 +19,11 @@ const RecentTransactions = ({ transactions, onSeeMore }) => {
           return (
             <TransactionInfoCard
               key={item._id}
-              title={item.type == "expense" ? item.category : item.source}
+              title={
+                item.type.toLowerCase() === "expense"
+                  ? item.category || "Expense"
+                  : item.source || "Income"
+              }
               icon={item.icon}
               date={moment(item.date).format("DD MM YYYY")}
               amount={item.amount}

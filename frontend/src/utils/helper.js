@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const validateEmail = (email) => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
@@ -26,3 +28,26 @@ export const addThousandSeperator = (num) => {
     ? `${formattedInteger}.${fractionalPart}`
     : formattedInteger;
 };
+
+export const prepareExpenseBarChartData = (data = []) => {
+
+  const grouped = {};
+
+  data.forEach(item => {
+    const month = moment(item.date).format('MMM'); // e.g., "Aug"
+
+    if (!grouped[month]) {
+      grouped[month] = 0;
+    }
+
+    grouped[month] += item.amount;
+  });
+
+  const chartData = data.map((item) => ({
+    category: item?.category,
+    amount: item?.amount,
+  }
+));
+
+  return chartData;
+}
