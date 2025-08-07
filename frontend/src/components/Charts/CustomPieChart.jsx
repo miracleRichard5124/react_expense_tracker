@@ -31,7 +31,7 @@ const CustomPieChart = ({
           labelLine={false}
         >
           {data.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={colors[entry.name]} />
+            <Cell key={`cell-${index}`} fill={colors[index % colors.length]} />
           ))}
         </Pie>
         <Tooltip content={CustomTooltip}/>
