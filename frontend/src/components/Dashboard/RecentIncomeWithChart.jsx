@@ -11,10 +11,6 @@ const RecentIncomeWithChart = ({ data, totalIncome }) => {
       name: item?.source,
       amount: Number(item?.amount),
     }));
-
-    console.log("Incoming Data: ", data);
-    console.log("Updated Data: ", chartData);
-
     setChartData(dataArr);
   };
 
