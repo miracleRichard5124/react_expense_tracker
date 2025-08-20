@@ -73,9 +73,21 @@ const Income = () => {
     }
   };
 
-  const handleDownloadIncome = async () => {};
+  const handleDownloadIncomeDetails = async () => {};
 
-  const deleteIncome = async (id) => {};
+  const deleteIncome = async (id) => {
+    try{
+      await axiosInstance.delete(API_PATHS.INCOME.DELETE_INCOME(id));
+
+      setOpenDeleteAlert({show: false, data: null});
+      toast.success("Income details deleted!");
+      fetchIncomeDetails();
+    }catch(error){
+      console.error("Error deleting Income details, " 
+        + error?.response?.data?.message || error.message
+      );
+    }
+  };
 
 useEffect(() => {
  fetchIncomeDetails();
@@ -99,7 +111,7 @@ useEffect(() => {
             onDelete={(id) => {
               setOpenDeleteAlert({show: true, data: id});
             }}
-            // onDownload={handleDownloadIncomeDetails}
+            onDownload={handleDownloadIncomeDetails}
           />
         </div>
 
