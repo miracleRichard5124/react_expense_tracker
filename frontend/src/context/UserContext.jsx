@@ -13,11 +13,13 @@ const UserProvider = ({children}) => {
   const clearUser = () => {
     setUser(null);
   };
+  
 
   return(
     <UserContext.Provider
       value={{
         user, 
+        setUser,
         updateUser,
         clearUser,
       }}

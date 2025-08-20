@@ -1,10 +1,11 @@
 import React from 'react';
+import DashboardLayout from '../../components/Layouts/DashboardLayout';
 
 const Expense = () => {
   return (
-    <div>
+    <DashboardLayout activeMenu='Expense'>
       Expense
-    </div>
+    </DashboardLayout>
   );
 }
 

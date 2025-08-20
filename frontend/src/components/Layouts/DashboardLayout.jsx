@@ -1,11 +1,34 @@
-import React, { useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { UserContext } from '../../context/UserContext';
 import SideMenu from './SideMenu';
 import Navbar from './Navbar';
+import axiosInstance from '../../utils/axiosInstance';
+import { API_PATHS } from '../../utils/apiPaths';
 
 const DashboardLayout = ({children, activeMenu}) => {
 
-  const {user} = useContext(UserContext);
+  const {user, setUser, clearUser} = useContext(UserContext);
+  const [loading, setLoading] = useState(true);
+
+  const fetchUserDetails = async() => {
+    try{
+      const response = await axiosInstance.get(API_PATHS.AUTH.GET_USER_INFO)
+      if(response.data){
+        setUser(response.data)
+      }
+    }catch(error){
+      console.log("Error fetching User Details, " + error)
+      clearUser();
+    }finally{
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchUserDetails()
+
+    return () => {}
+  }, [])
 
   return (
     <div className=''>
@@ -25,3 +48,4 @@ const DashboardLayout = ({children, activeMenu}) => {
 }
 
 export default DashboardLayout;
+

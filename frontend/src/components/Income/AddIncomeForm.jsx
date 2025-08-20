@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Inputs from '../inputs/Inputs';
 import EmojiPickerPopup from '../EmojiPickerPopup';
 
-const AddIncomeForm = ({onAddIcome}) => {
+const AddIncomeForm = ({onAddIncome}) => {
 
   const [income, setIncome] = useState({
     source: "",
@@ -39,7 +39,7 @@ const AddIncomeForm = ({onAddIcome}) => {
 
       <Inputs
         value={income.date}
-        onChange={({date}) => handleonChange("date", target.value)}
+        onChange={({target}) => handleonChange("date", target.value)}
         label='date'
         placeholder=''
         type='date'
@@ -49,7 +49,7 @@ const AddIncomeForm = ({onAddIcome}) => {
         <button
           type='button'
           className='add-btn add-btn-fill'
-          onClick={() => onAddIcome(income)}
+          onClick={() => onAddIncome(income)}
         >
           Add Income
         </button>
