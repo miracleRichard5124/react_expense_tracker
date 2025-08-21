@@ -157,8 +157,8 @@ const Income = () => {
           </Modal>
         </div>
       ) : (
-        <div className="card grid grid-cols-1 mt-5">
-          <div className="w-full">
+        <div className="card grid grid-cols-1 mt-5 p-4">
+          <div className="flex justify-end w-full">
             <button
               className="add-btn"
               onClick={() => setOpenAddIncomeModal(true)}

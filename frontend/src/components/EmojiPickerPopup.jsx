@@ -31,6 +31,8 @@ const EmojiPickerPopup = ({icon, onSelect}) => {
           <EmojiPicker
             open={isOpen}
             onEmojiClick={(emoji) => onSelect(emoji.emoji)}
+            width='100%'
+            height={300}
           />
         </div>
       )}
