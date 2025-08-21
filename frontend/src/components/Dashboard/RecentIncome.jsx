@@ -28,7 +28,7 @@ const RecentIncome = ({transactions, onSeeMore}) => {
             />
         ))
         ) : (
-          <div className="">
+          <div className="flex items-center justify-center h-full text-gray-400">
             No Income Yet
           </div>
         )}

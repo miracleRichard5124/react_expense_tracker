@@ -36,7 +36,7 @@ const RecentIncomeWithChart = ({ data, totalIncome }) => {
           colors={COLORS}
         />
       ) : (
-        <div className="flex justify-center items-center h-full text-gray-500">
+        <div className="flex justify-center items-center h-full text-gray-400">
           No Income added yet
         </div>
       )}
