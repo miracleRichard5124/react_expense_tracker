@@ -15,7 +15,7 @@ const IncomeOverview = ({ transactions, onAddIncome }) => {
 
   return (
     <div className="card">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center gap-10 justify-between">
         <div className="">
           <h5 className="text-lg">Income Overview</h5>
           <p className="text-xs text-gray-400 mt-0.5">

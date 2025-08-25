@@ -10,6 +10,7 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
+import { addThousandSeperator } from "../../utils/helper";
 
 const CustomBarChart = ({ data }) => {
   const getBarColor = (index) => {
@@ -26,7 +27,7 @@ const CustomBarChart = ({ data }) => {
           <p className="text-sm text-gray-600">
             Amount:{" "}
             <span className="text-sm font-medium text-gray-900">
-              ${payload[0].payload.amount}
+              ${addThousandSeperator(payload[0].payload.amount)}
             </span>
           </p>
         </div>
@@ -45,7 +46,7 @@ const CustomBarChart = ({ data }) => {
             tick={{ fontSize: 12, fill: "#555" }}
             stroke="none"
           />
-          <YAxis tick={{ fontSize: 12, fill: "#555" }} stroke="none" />
+          <YAxis tick={{ fontSize: 12, fill: "#555" }} stroke="none" tickFormatter={(value) => addThousandSeperator(value)}/>
 
           <Tooltip content={((props) => <CustomTooltip {...props}/>)} />
 
