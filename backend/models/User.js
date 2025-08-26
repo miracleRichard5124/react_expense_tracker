@@ -8,6 +8,13 @@ const UserSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     profileImageUrl: { type: String, default: null },
+    username: { type: String, unique: true },
+    preferences: {
+      theme: { type: String, enum: ['light', 'dark'], default: 'light' },
+      currency: {type: String, default: 'USD' },
+      language: { type: String, default: 'en' },
+      notifications: { type: Boolean, default: true },
+    }
   },
   {
     timestamps: true,
