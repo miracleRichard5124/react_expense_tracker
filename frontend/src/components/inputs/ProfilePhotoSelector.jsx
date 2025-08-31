@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { LuUser, LuUpload, LuTrash } from "react-icons/lu";
 
-const ProfilePhotoSelector = ({image, setImage}) => {
+const ProfilePhotoSelector = ({image, setImage, size="w-20 h-20", buttonSize='w-8 h-8'}) => {
   const inputRef = useRef(null);
   const [previewUrl, setPreviewUrl] = useState(null);
 
@@ -37,10 +37,10 @@ const ProfilePhotoSelector = ({image, setImage}) => {
       />
 
       {!image ? (
-        <div className="w-20 h-20 flex items-center justify-center bg-purple-100 rounded-full relative">
+        <div className={`${size} flex items-center justify-center bg-purple-100 rounded-full relative`}>
           <LuUser className="text-4xl text-primary" />
 
-          <button className="w-8 h-8 flex items-center justify-center bg-primary text-white rounded-full absolute -bottom-1 -right-2 border-none outline-none cursor-pointer" type="button" onClick={onChooseFile}>
+          <button className={`${buttonSize} flex items-center justify-center bg-primary text-white rounded-full absolute -bottom-1 -right-2 border-none outline-none cursor-pointer`} type="button" onClick={onChooseFile}>
             <LuUpload />
           </button>
         </div>

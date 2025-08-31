@@ -5,7 +5,7 @@ const Inputs = ({value, onChange, label, placeholder, type}) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => {
-    setShowPassword(!showPassword);;
+    setShowPassword(!showPassword);
   }
 
   return (

@@ -41,7 +41,7 @@ export const prepareExpenseBarChartData = (data = []) => {
   const grouped = {};
 
   recentData.forEach((item) => {
-    const formattedDate = moment(item.date).format("MMM D");
+    const formattedDate = moment(item.date).format("D MMM");
 
     if (!grouped[formattedDate]) {
       grouped[formattedDate] = {
@@ -62,7 +62,7 @@ export const prepareIncomeBarChartData = (data = []) => {
   const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date))
 
   const chartData = sortedData.map((item) => ({
-    date: moment(item?.date).format('Do MMM'),
+    date: moment(item?.date).format('D MMM'),
     amount: item?.amount,
     source: item?.source,
   }));
@@ -73,7 +73,7 @@ export const prepareExpenseLineChartData = ((data = []) => {
   const sortedData = [...data].sort((a, b) => new Date(a.date) - new Date(b.date))
 
   const chartData = sortedData.map((item) => ({
-    month: moment(item?.date).format('Dd MMM'),
+    month: moment(item?.date).format('D MMM'),
     amount: item?.amount,
     category: item?.category,
   }));

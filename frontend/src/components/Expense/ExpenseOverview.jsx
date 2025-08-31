@@ -27,8 +27,10 @@ const ExpenseOverview = ({transactions, onAddExpense}) => {
         </button>
       </div>
 
-      <div className="mt-10">
-        <CustomLineChart data={chartData}/>
+      <div className="mt-10 flex justify-center px-2">
+        <div className="w-full max-w-3xl">
+          <CustomLineChart data={chartData}/>
+        </div>
       </div>
     </div>
   );

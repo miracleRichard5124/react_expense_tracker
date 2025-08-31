@@ -127,7 +127,7 @@ const Income = () => {
   return (
     <DashboardLayout activeMenu="Income">
       {incomeData && incomeData.length > 0 ? (
-        <div className="mx-auto my-5">
+        <div className="mx-auto">
           <div className="grid grid-cols-1 gap-6">
             <div className="">
               <IncomeOverview

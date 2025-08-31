@@ -28,8 +28,10 @@ const IncomeOverview = ({ transactions, onAddIncome }) => {
         </button>
       </div>
 
-      <div className="mt-10">
-        <CustomBarChart data={chartData}/>
+      <div className="mt-10 flex justify-center">
+        <div className="w-full max-w-3xl">
+          <CustomBarChart data={chartData}/>
+        </div>
       </div>
     </div>
   );

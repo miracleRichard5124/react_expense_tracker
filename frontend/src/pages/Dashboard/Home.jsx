@@ -50,14 +50,16 @@ const Home = () => {
   if (loading || !dashboardData) {
     return (
       <DashboardLayout activeMenu="Dashboard">
-        <div className="my-5 mx-auto">Loading...</div>
+        <div className="my-5 mx-auto">
+          <p>Loading...</p>
+        </div>
       </DashboardLayout>
     );
   }
 
   return (
     <DashboardLayout activeMenu="Dashboard">
-      <div className="my-5 mx-auto">
+      <div className="mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <InfoCard
             icon={<IoMdCard />}

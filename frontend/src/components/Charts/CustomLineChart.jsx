@@ -33,7 +33,7 @@ const CustomLineChart = ({ data }) => {
   return (
     <div className="bg-white">
       <ResponsiveContainer width="100%" height={300}>
-        <AreaChart data={data}>
+        <AreaChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 10 }}>
           <defs>
             <linearGradient id="expenseGradient" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#075cf5" stopOpacity={0.4} />
@@ -44,10 +44,11 @@ const CustomLineChart = ({ data }) => {
           <CartesianGrid stroke="none" />
           <XAxis
             dataKey="month"
-            tick={{ fontSize: 12, fill: "#555" }}
+            tick={{ fontSize: 10, fill: "#555" }}
             stroke="none"
+            tickMargin={20}
           />
-          <YAxis tick={{ fontSize: 12, fill: "#555" }} stroke="none" tickFormatter={(value) => addThousandSeperator(value)}/>
+          <YAxis tick={{ fontSize: 10, fill: "#555" }} stroke="none" tickFormatter={(value) => addThousandSeperator(value)}/>
           <Tooltip content={<CustomTooltip />} />
 
           <Area

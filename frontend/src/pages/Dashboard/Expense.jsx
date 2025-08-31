@@ -113,7 +113,7 @@ const Expense = () => {
   }, [])
 
   return <DashboardLayout activeMenu="Expense">
-    <div className="my-5 mx-auto">
+    <div className="mx-auto">
       <div className="grid grid-cols-1 gap-6">
         <div className="">
           <ExpenseOverview transactions={expenseData} onAddExpense={() => setOpenAddExpenseModal(true)}/>
