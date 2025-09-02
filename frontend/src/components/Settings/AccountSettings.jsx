@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import Modal from "../Modal";
 import DeleteAlert from "../DeleteAlert";
+import toast from "react-hot-toast";
 
 const AccountSettings = () => {
   const { user, clearUser } = useContext(UserContext);
@@ -10,23 +11,36 @@ const AccountSettings = () => {
   const [modalAction, setModalAction] = useState(null);
 
   const handleClearData = () => {
-    localStorage.clear();
-    clearUser();
-    console.log("User Data Cleared");
-    setModalOpen(false);
+    try {
+      localStorage.clear();
+      clearUser();
+      toast.success("Account Data Cleared successfully.");
+      console.log("User Data Cleared");
+    } catch (error) {
+      toast.error("Error clearing User Data: ", error);
+    } finally {
+      setModalOpen(false);
+    }
   };
 
-  const handleDeleteAccount = () => {
-    console.log("Account Deleted");
-    localStorage.clear();
-    clearUser();
-    setModalOpen(false);
+  const handleDeleteAccount = async () => {
+    try {
+      await axiosInstance.delete(API_PATHS.AUTH.DELETE_USER(user.id));
+      toast.success("Account deleted Successfully!");
+      console.log("Account Deleted");
+      localStorage.clear();
+      clearUser();
+    } catch (error) {
+      toast.error("Error Deleting Account: ", error);
+    } finally {
+      setModalOpen(false);
+    }
   };
 
   const openModal = (action) => {
     setModalAction(action);
     setModalOpen(true);
-  }
+  };
 
   return (
     <div className="card space-y-6">
@@ -56,13 +70,13 @@ const AccountSettings = () => {
           Change Password
         </button>
         <button
-          onClick={() => openModal('clear')}
+          onClick={() => openModal("clear")}
           className="px-4 py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50"
         >
           Clear Data
         </button>
-        <button 
-          onClick={() => openModal('delete')} 
+        <button
+          onClick={() => openModal("delete")}
           className="px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-50"
         >
           Delete Account
@@ -84,7 +98,7 @@ const AccountSettings = () => {
             modalAction === "delete" ? handleDeleteAccount : handleClearData
           }
           buttonLabel={modalAction === "delete" ? "Delete" : "Clear"}
-          btnColor={modalAction === "delete" ? 'delete-btn' : 'clear-btn'}
+          btnColor={modalAction === "delete" ? "delete-btn" : "clear-btn"}
         />
       </Modal>
     </div>
