@@ -14,27 +14,19 @@ import ExpenseTransactions from "../../components/Dashboard/ExpenseTransactions"
 import Last30DaysExpenses from "../../components/Dashboard/last30DaysExpenses";
 import RecentIncomeWithChart from "../../components/Dashboard/RecentIncomeWithChart";
 import RecentIncome from "../../components/Dashboard/RecentIncome";
+import Loading from "./Loading"; // import loader
 
 const Home = () => {
   useUserAuth();
-
   const navigate = useNavigate();
 
   const [dashboardData, setDashboardData] = useState(null);
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(true); // start loading as true
 
   const fetchDashboardData = async () => {
-    if (loading) return;
-
-    setLoading(true);
     try {
-      const response = await axiosInstance.get(
-        `${API_PATHS.DASHBOARD.GET_DATA}`
-      );
-
-      if (response.data) {
-        setDashboardData(response.data.data);
-      }
+      const response = await axiosInstance.get(API_PATHS.DASHBOARD.GET_DATA);
+      if (response.data) setDashboardData(response.data.data);
     } catch (error) {
       console.log("Something went wrong. Please try again! ", error);
     } finally {
@@ -44,18 +36,16 @@ const Home = () => {
 
   useEffect(() => {
     fetchDashboardData();
-    return () => {};
   }, []);
 
-  if (loading || !dashboardData) {
-    return (
-      <DashboardLayout activeMenu="Dashboard">
-        <div className="my-5 mx-auto">
-          <p>Loading...</p>
-        </div>
-      </DashboardLayout>
-    );
-  }
+  if (loading) return <Loading />;
+
+  // Helper function for no records card
+  const renderNoRecordsCard = (message) => (
+    <div className="card p-6 mt-4 border rounded-lg shadow-sm text-center text-gray-500">
+      {message}
+    </div>
+  );
 
   return (
     <DashboardLayout activeMenu="Dashboard">
@@ -77,15 +67,19 @@ const Home = () => {
             icon={<LuHandCoins />}
             color="bg-red-500"
             label="Total Expense"
-            value={addThousandSeperator(dashboardData.totalExpense)}
+            value={addThousandSeperator(dashboardData?.totalExpense)}
           />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          <RecentTransactions
-            transactions={dashboardData?.recentTransactions}
-            onSeeMore={() => navigate('/expense')}
-          />
+          {dashboardData?.recentTransactions?.length > 0 ? (
+            <RecentTransactions
+              transactions={dashboardData.recentTransactions}
+              onSeeMore={() => navigate("/expense")}
+            />
+          ) : (
+            renderNoRecordsCard("No transactions made yet")
+          )}
 
           <FinanceOverview
             totalBalance={dashboardData?.totalBalance}
@@ -93,24 +87,34 @@ const Home = () => {
             totalExpense={dashboardData?.totalExpense}
           />
 
-          <ExpenseTransactions
-            transactions={dashboardData?.last30DaysExpenses?.transactions || []}
-            onSeeMore={() => navigate('/expense')}
-          />
+          {dashboardData?.last30DaysExpenses?.transactions?.length > 0 ? (
+            <ExpenseTransactions
+              transactions={dashboardData.last30DaysExpenses.transactions}
+              onSeeMore={() => navigate("/expense")}
+            />
+          ) : (
+            renderNoRecordsCard("No Expense records yet")
+          )}
 
-          <Last30DaysExpenses
-            data={dashboardData?.last30DaysExpenses?.transactions || []}
-          />
+          {dashboardData?.last30DaysExpenses?.transactions?.length > 0 ? (
+            <Last30DaysExpenses
+              data={dashboardData.last30DaysExpenses.transactions}
+            />
+          ) : null}
 
-          <RecentIncomeWithChart
-            data={dashboardData?.last60DaysIncome?.transactions?.slice(0, 4) || []}
-            totalIncome={dashboardData?.totalIncome || 0}
-          />
+          {dashboardData?.last60DaysIncome?.transactions?.length > 0 ? (
+            <RecentIncomeWithChart
+              data={dashboardData.last60DaysIncome.transactions.slice(0, 4)}
+              totalIncome={dashboardData.totalIncome || 0}
+            />
+          ) : null}
 
-          <RecentIncome
-            transactions={dashboardData?.last60DaysIncome?.transactions || []}
-            onSeeMore={() => navigate('/income')}
-          />
+          {dashboardData?.last60DaysIncome?.transactions?.length > 0 ? (
+            <RecentIncome
+              transactions={dashboardData.last60DaysIncome.transactions}
+              onSeeMore={() => navigate("/income")}
+            />
+          ) : renderNoRecordsCard("No Income records yet")}
         </div>
       </div>
     </DashboardLayout>

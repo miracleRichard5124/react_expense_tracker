@@ -1,71 +1,133 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import ProfilePhotoSelector from "../inputs/ProfilePhotoSelector";
 import { UserContext } from "../../context/UserContext";
 import EditableInput from "./EditableInput";
+import SelectInput from "../SelectInput";
+import axiosInstance from "../../utils/axiosInstance";
+import { API_PATHS } from "../../utils/apiPaths";
 
-const UserSettings = ({ image, setImage }) => {
+const UserSettings = () => {
   const { user, updateUser } = useContext(UserContext);
 
   const [fullName, setFullName] = useState(user?.fullName || "");
   const [email, setEmail] = useState(user?.email || "");
-  const [country, setCountry] = useState(user?.country || 'US');
+  const [country, setCountry] = useState(user?.preferences?.country || "");
+  const [currencyCode, setCurrencyCode] = useState(user?.preferences?.currencyCode || "");
+  const [currencySymbol, setCurrencySymbol] = useState(user?.preferences?.currencySymbol || "");
+  const [profileImageUrl, setProfileImageUrl] = useState(user?.profileImageUrl || "");
+  const [countries, setCountries] = useState([]);
 
-  const handleSave = () => {
-    const updatedUser = {fullName, email, country, image};
-    console.log("Saving user data:", updatedUser);
-    updateUser(updatedUser)
+  // Fetch all countries and currencies
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const res = await axiosInstance.get(API_PATHS.CURRENCY.GET_ALL_CURRENCIES);
+        setCountries(res.data);
+      } catch (err) {
+        console.error("Error fetching countries:", err);
+      }
+    };
+    fetchCountries();
+  }, []);
+
+  const getFlagEmoji = (countryCode) => {
+    if (!countryCode || typeof countryCode !== "string") return "";
+    return countryCode.toUpperCase().replace(/./g, char =>
+      String.fromCodePoint(127397 + char.charCodeAt(0))
+    );
+  };
+
+  const countryOptions = countries.map(c => ({
+    value: c.countryCode,
+    label: `${getFlagEmoji(c.countryCode)} ${c.country} (${c.currencyCode})`,
+    currencyCode: c.currencyCode,
+    currencySymbol: c.currencySymbol,
+  }));
+
+  // Upload image and set profileImageUrl
+  const handleImageUpload = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      const res = await axiosInstance.post(API_PATHS.IMAGE.UPLOAD_IMAGE, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setProfileImageUrl(res.data.imageUrl);
+    } catch (err) {
+      console.error("Image upload failed:", err);
+    }
+  };
+
+  // Save all changes to backend
+  const handleSaveAll = async () => {
+    try {
+      const selectedCountry = countryOptions.find(c => c.value === country) || {};
+      const response = await axiosInstance.put(API_PATHS.AUTH.UPDATE_USER, {
+        fullName,
+        email,
+        preferences: {
+          country,
+          currencyCode: selectedCountry.currencyCode || "",
+          currencySymbol: selectedCountry.currencySymbol || "",
+        },
+        profileImageUrl,
+      });
+
+      updateUser(response.data.user); // update context
+      alert("Profile updated successfully!");
+    } catch (err) {
+      console.error("Failed to update user:", err);
+      alert("Failed to update profile. Try again.");
+    }
   };
 
   return (
-    <div className="space-y-6">
-      <h2 className="text-lg font-semibold">User Information</h2>
+    <div className="card space-y-8">
+      <h2 className="text-lg font-semibold">User Settings</h2>
 
-      <div className="flex items-center gap-6">
-        <ProfilePhotoSelector
-          image={image}
-          setImage={setImage}
-          size={"w-50 h-50"}
-          buttonSize={"w-15 h-15"}
-        />
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-10">
+        <div className="flex justify-center w-full md:w-auto">
+          <ProfilePhotoSelector
+            image={profileImageUrl}
+            setImage={handleImageUpload}
+            size="w-50 h-50"
+            buttonSize="w-15 h-15"
+          />
+        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
           <EditableInput
             label="Full Name"
             value={fullName}
-            onSave={(val) => setFullName(val)}
+            onSave={setFullName}
           />
           <EditableInput
             label="Email"
             value={email}
             type="email"
-            onSave={(val) => setEmail(val)}
+            onSave={setEmail}
           />
 
-          <div className="">
-            <div>
-              <label className="text-[13px] text-slate-800">Country</label>
-              <select
-                value={country}
-                onChange={(e) => setCountry(e.target.value)}
-                className="input-box w-full bg-transparent outline-none"
-              >
-                <option value="US">🇺🇸 United States</option>
-                <option value="NG">🇳🇬 Nigeria</option>
-                <option value="GB">🇬🇧 United Kingdom</option>
-                <option value="IN">🇮🇳 India</option>
-                <option value="DE">🇩🇪 Germany</option>
-              </select>
-            </div>
+          <div>
+            <label className="text-slate-800 mb-2">Country</label>
+            <SelectInput
+              options={countryOptions}
+              value={country}
+              onChange={selected => setCountry(selected.value)}
+              placeholder="Select your country"
+            />
           </div>
         </div>
       </div>
 
-      <button
-        className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
-        onClick={handleSave}
-      >
-        Save Changes
-      </button>
+      <div className="flex justify-center md:justify-start">
+        <button
+          className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition cursor-pointer"
+          onClick={handleSaveAll}
+        >
+          Save Changes
+        </button>
+      </div>
     </div>
   );
 };

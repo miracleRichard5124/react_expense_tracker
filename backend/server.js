@@ -8,6 +8,7 @@ const incomeRoutes = require("./routes/incomeRoutes.js");
 const expenseRoutes = require("./routes/expenseRoutes.js");
 const dashboardRoutes = require("./routes/dashboardRoutes.js");
 const settingsRoutes = require('./routes/settingsRoutes.js');
+const currencyRoutes = require ('./routes/currencyRoutes.js');
 
 const app = express();
 
@@ -29,6 +30,7 @@ app.use("/api/v1/income", incomeRoutes);
 app.use("/api/v1/expense", expenseRoutes);
 app.use('/api/v1/settings', settingsRoutes);
 app.use("/api/v1/dashboard", dashboardRoutes);
+app.use("/api/v1/currencies", currencyRoutes);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

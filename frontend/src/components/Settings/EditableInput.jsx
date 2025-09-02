@@ -27,7 +27,7 @@ const EditableInput = ({label, value, onSave, type = 'text'}) => {
         {editing ? (
           <FaCheck
             size={20}
-            className="text-green-500 cursor-pointer ml-2"
+            className="text-purple-500 cursor-pointer ml-2"
             onClick={handleSave}
           />
         ) : (

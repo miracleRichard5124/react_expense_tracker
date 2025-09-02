@@ -39,7 +39,7 @@ const CustomBarChart = ({ data }) => {
   return (
     <div className="bg-white mt-6">
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 10}}>
+        <BarChart data={data}>
           <CartesianGrid stroke="none" />
           <XAxis
             dataKey="date"

@@ -9,12 +9,22 @@ const UserSchema = new mongoose.Schema(
     password: { type: String, required: true },
     profileImageUrl: { type: String, default: null },
     username: { type: String, unique: true },
+
     preferences: {
       theme: { type: String, enum: ['light', 'dark'], default: 'light' },
-      currency: {type: String, default: 'USD' },
+      country: { type: String, default: "Unknown" },  
+      currencyCode: { type: String, default: "USD" }, 
+      currencySymbol: { type: String, default: "$" }, 
       language: { type: String, default: 'en' },
       notifications: { type: Boolean, default: true },
-    }
+    },
+    loginHistory: [
+      {
+        timestamp: { type: Date, default: Date.now },
+        ip: {type: String},
+        userAgent: {type: String}
+      }
+    ]
   },
   {
     timestamps: true,

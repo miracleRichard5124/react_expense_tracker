@@ -46,6 +46,15 @@
   @apply flex w-full h-full justify-center items-center px-3 py-5 cursor-pointer
 }
 
+.delete-btn{
+  @apply bg-red-400 hover:bg-red-500
+}
+
+.clear-btn{
+  @apply bg-yellow-500 hover:bg-yellow-600
+}
+
+
 @keyframes pulseGrow{
   0%, 80%, 100%{
     transform: scale(0.75);
