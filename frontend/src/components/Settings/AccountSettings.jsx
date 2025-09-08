@@ -66,18 +66,18 @@ const AccountSettings = () => {
       </div>
 
       <div className="flex flex-col gap-3">
-        <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">
+        <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 cursor-pointer">
           Change Password
         </button>
         <button
           onClick={() => openModal("clear")}
-          className="px-4 py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50"
+          className="px-4 py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-100 cursor-pointer"
         >
           Clear Data
         </button>
         <button
           onClick={() => openModal("delete")}
-          className="px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-50"
+          className="px-4 py-2 border border-red-500 text-red-500 rounded-lg hover:bg-red-100 cursor-pointer"
         >
           Delete Account
         </button>

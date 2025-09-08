@@ -11,8 +11,13 @@ import {
   Legend,
 } from "recharts";
 import { addThousandSeperator } from "../../utils/helper";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 const CustomBarChart = ({ data }) => {
+
+  const {user} = useContext(UserContext);
+
   const getBarColor = (index) => {
     return index % 2 === 0 ? "#875cf5" : "#cfbefb";
   };
@@ -27,7 +32,7 @@ const CustomBarChart = ({ data }) => {
           <p className="text-sm text-gray-600">
             Amount:{" "}
             <span className="text-sm font-medium text-gray-900">
-              ${addThousandSeperator(payload[0].payload.amount)}
+              {user?.preferences?.currencySymbol || ''}{addThousandSeperator(payload[0].payload.amount)}
             </span>
           </p>
         </div>

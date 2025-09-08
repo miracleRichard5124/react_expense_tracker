@@ -80,7 +80,7 @@ const ProfilePhotoSelector = ({ image, setImage, size = "w-20 h-20", buttonSize 
             className="w-8 h-8 flex items-center justify-center bg-red-500 text-white border-none outline-none rounded-full absolute -bottom-1 -right-1 cursor-pointer"
             onClick={handleRemoveImage}
           >
-            <LuTrash />
+            <LuTrash className="text-base sm:text-lg"/>
           </button>
           {uploading && (
             <div className="absolute inset-0 bg-black/30 flex items-center justify-center text-white rounded-full">

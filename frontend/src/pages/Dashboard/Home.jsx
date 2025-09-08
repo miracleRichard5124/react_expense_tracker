@@ -38,7 +38,13 @@ const Home = () => {
     fetchDashboardData();
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) {
+    return(
+      <DashboardLayout activeMenu="Dashboard">
+        <Loading />
+      </DashboardLayout>
+    );
+  }
 
   // Helper function for no records card
   const renderNoRecordsCard = (message) => (
@@ -49,7 +55,7 @@ const Home = () => {
 
   return (
     <DashboardLayout activeMenu="Dashboard">
-      <div className="mx-auto">
+      <div className="mx-auto fade-in">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <InfoCard
             icon={<IoMdCard />}
@@ -81,12 +87,14 @@ const Home = () => {
             renderNoRecordsCard("No transactions made yet")
           )}
 
-          <FinanceOverview
+          {dashboardData?.recentTransactions?.length > 0 && (
+            <FinanceOverview
             totalBalance={dashboardData?.totalBalance}
             totalIncome={dashboardData?.totalIncome}
             totalExpense={dashboardData?.totalExpense}
           />
-
+          )}
+          
           {dashboardData?.last30DaysExpenses?.transactions?.length > 0 ? (
             <ExpenseTransactions
               transactions={dashboardData.last30DaysExpenses.transactions}

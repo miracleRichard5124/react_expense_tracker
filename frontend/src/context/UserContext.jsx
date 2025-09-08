@@ -1,40 +1,24 @@
-import React, { createContext, useState, useEffect} from "react";
+import React, { createContext, useState } from "react";
+
 
 export const UserContext = createContext();
 
-const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
+const UserProvider = ({children}) => {
+  const [user, setUser] = useState(null);
 
   const updateUser = (userData) => {
-    setUser((prev) => ({
-      ...(prev || {}), // <-- safely spread prev
-      ...userData,
-      preferences: {
-        ...(prev?.preferences || {}), // <-- safely spread prev.preferences
-        ...userData.preferences,
-      },
-    }));
+    setUser(userData);
   };
 
   const clearUser = () => {
     setUser(null);
   };
+  
 
-  useEffect(() => {
-    if(user){
-      localStorage.setItem('user', JSON.stringify(user));
-    }else{
-      localStorage.removeItem('user')
-    }
-  }, [user]);
-
-  return (
+  return(
     <UserContext.Provider
       value={{
-        user,
+        user, 
         setUser,
         updateUser,
         clearUser,
@@ -42,7 +26,7 @@ const UserProvider = ({ children }) => {
     >
       {children}
     </UserContext.Provider>
-  );
-};
+  )
+}
 
 export default UserProvider;

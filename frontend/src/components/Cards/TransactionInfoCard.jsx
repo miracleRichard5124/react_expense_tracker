@@ -6,6 +6,8 @@ import {
   LuTrash2,
 } from "react-icons/lu";
 import { addThousandSeperator } from "../../utils/helper";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 const TransactionInfoCard = ({
   title,
@@ -16,6 +18,8 @@ const TransactionInfoCard = ({
   hideDeleteBtn,
   onDelete,
 }) => {
+
+  const {user} = useContext(UserContext);
 
   const getAmountStyles = () => type === 'Income' ? "bg-green-50 text-green-500" : "bg-red-50 text-red-500";
 
@@ -44,7 +48,7 @@ const TransactionInfoCard = ({
  
           <div className={`flex items-center gap-2 px-3 py-1.5 rounded-md ${getAmountStyles()}`}>
             <h6 className="text-xs font-medium">
-              {type == "Income" ? "+" : "-"} ${addThousandSeperator(amount)}
+              {type == "Income" ? "+" : "-"} {user?.preferences?.currencySymbol || ''}{addThousandSeperator(amount)}
             </h6>
             {type == "Income" ? <LuTrendingUp /> : <LuTrendingDown />}
           </div>

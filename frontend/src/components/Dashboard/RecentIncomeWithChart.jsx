@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import CustomPieChart from "../Charts/CustomPieChart";
 import { addThousandSeperator } from "../../utils/helper";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 const COLORS = ["#875CF5", "#FA2C37", "#FF6900", "#4f39f6"];
 
 const RecentIncomeWithChart = ({ data, totalIncome }) => {
+  const {user} = useContext(UserContext);
+
   const [chartData, setChartData] = useState([]);
 
   const prepareChartData = () => {
@@ -32,7 +36,7 @@ const RecentIncomeWithChart = ({ data, totalIncome }) => {
         <CustomPieChart
           data={chartData}
           label="Total Income"
-          totalAmount={`$${addThousandSeperator(totalIncome)}`}
+          totalAmount={`${user?.preferences?.currencySymbol}${addThousandSeperator(totalIncome)}`}
           showTextAnchor
           colors={COLORS}
         />

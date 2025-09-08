@@ -59,7 +59,13 @@ const Income = () => {
     fetchIncomeDetails();
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) {
+    return(
+      <DashboardLayout activeMenu="Income">
+        <Loading />
+      </DashboardLayout>
+    )
+  } ;
 
   const renderNoRecordsCard = (message) => (
     <div className="card p-6 mt-4 border rounded-lg shadow-sm text-center text-gray-500">{message}</div>
@@ -67,7 +73,7 @@ const Income = () => {
 
   return (
     <DashboardLayout activeMenu="Income">
-      <div className="mx-auto">
+      <div className="mx-auto fade-in">
         <IncomeOverview
           transactions={incomeData}
           onAddIncome={() => setOpenAddIncomeModal(true)}

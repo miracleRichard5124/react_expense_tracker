@@ -80,7 +80,11 @@ const Expense = () => {
     fetchExpenseDetails();
   }, []);
 
-  if (loading) return <Loading />;
+  if (loading) {return (
+    <DashboardLayout activeMenu="Expense">
+      <Loading/>
+    </DashboardLayout>
+  )};
 
   const renderNoRecordsCard = (message) => (
     <div className="card p-6 mt-4 border rounded-lg shadow-sm text-center text-gray-500">{message}</div>
@@ -88,7 +92,7 @@ const Expense = () => {
 
   return (
     <DashboardLayout activeMenu="Expense">
-      <div className="mx-auto">
+      <div className="mx-auto fade-in">
         <ExpenseOverview
           transactions={expenseData}
           onAddExpense={() => setOpenAddExpenseModal(true)}

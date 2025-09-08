@@ -1,10 +1,14 @@
 import React from 'react';
 import CustomPieChart from '../Charts/CustomPieChart';
 import { addThousandSeperator } from '../../utils/helper';
+import { useContext } from 'react';
+import { UserContext } from '../../context/UserContext';
 
 const COLORS = ['#FF6900', '#875CF5', '#FA2C37'];
 
 const FinanceOverview = ({totalBalance, totalIncome, totalExpense}) => {
+
+  const {user} = useContext(UserContext);
 
   const balanceData = [
     {name: "Total Balance", amount: totalBalance},
@@ -21,7 +25,7 @@ const FinanceOverview = ({totalBalance, totalIncome, totalExpense}) => {
       <CustomPieChart
         data={balanceData}
         label="Total Balance"
-        totalAmount={`$${addThousandSeperator(totalBalance)}`}
+        totalAmount={`${user?.preferences?.currencySymbol || ''}${addThousandSeperator(totalBalance)}`}
         colors={COLORS}
         showTextAnchor
       />

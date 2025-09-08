@@ -2,7 +2,7 @@ import React from "react";
 
 const Loading = () => {
   return (
-    <div className="fixed inset-0 flex justify-center items-center bg-black/20 z-50">
+    <div className="flex justify-center items-center h-full py-10 absolute inset-0">
       <div className="flex space-x-2">
         {/* Three dots with bounce and delay */}
         <span className="w-4 h-4 bg-purple-500 rounded-full animate-bounce"></span>

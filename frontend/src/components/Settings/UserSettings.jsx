@@ -30,6 +30,17 @@ const UserSettings = () => {
     fetchCountries();
   }, []);
 
+  useEffect(() => {
+    if(user?.preferences?.country){
+      setCountry(user.preferences.country);
+      setCurrencyCode(user.preferences.currencyCode || "");
+      setCurrencySymbol(user.preferences.currencySymbol || "");
+      setFullName(user.fullName || "");
+      setEmail(user.email || "");
+      setProfileImageUrl(user.profileImageUrl || "");
+    }
+  }, [user])
+
   const getFlagEmoji = (countryCode) => {
     if (!countryCode || typeof countryCode !== "string") return "";
     return countryCode.toUpperCase().replace(/./g, char =>
@@ -66,7 +77,7 @@ const UserSettings = () => {
         fullName,
         email,
         preferences: {
-          country,
+          country: selectedCountry.name,
           currencyCode: selectedCountry.currencyCode || "",
           currencySymbol: selectedCountry.currencySymbol || "",
         },
@@ -119,6 +130,8 @@ const UserSettings = () => {
           </div>
         </div>
       </div>
+
+      <hr className="border-0.1 border-gray-200"/>
 
       <div className="flex justify-center md:justify-start">
         <button

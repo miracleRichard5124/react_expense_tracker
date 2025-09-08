@@ -9,8 +9,13 @@ import {
   AreaChart,
 } from "recharts";
 import { addThousandSeperator } from "../../utils/helper";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 const CustomLineChart = ({ data }) => {
+
+  const {user} = useContext(UserContext);
+
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
       return (
@@ -21,7 +26,7 @@ const CustomLineChart = ({ data }) => {
           <p className="text-sm text-gray-600">
             Amount:{" "}
             <span className="text-sm font-medium text-gray-900">
-              ${addThousandSeperator(payload[0].payload.amount)}
+              {user?.preferences?.currencySymbol || ''}{addThousandSeperator(payload[0].payload.amount)}
             </span>
           </p>
         </div>

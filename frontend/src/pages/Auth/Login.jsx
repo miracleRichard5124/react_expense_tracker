@@ -7,8 +7,10 @@ import axiosInstance from "../../utils/axiosInstance";
 import { API_PATHS } from "../../utils/apiPaths";
 import { useContext } from "react";
 import { UserContext } from "../../context/UserContext";
+import Loading from "../Dashboard/Loading";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -32,6 +34,7 @@ const Login = () => {
     }
 
     setError("");
+    setLoading(true);
 
     //Login API is called
     try {
@@ -51,6 +54,8 @@ const Login = () => {
       } else {
         setError("Something went wrong! Please try again.");
       }
+    } finally{
+      setLoading(false);
     }
   };
 
@@ -81,8 +86,11 @@ const Login = () => {
             />
 
             {error && <p className="text-red-500 text-xs pb-2.5">{error}</p>}
+            {loading && (
+              <div className="my-15"><Loading/></div>
+            )}
 
-            <button type="submit" className="btn-primary">
+            <button type="submit" className={`btn-primary ${loading ? "opacity-50 cursor-not-allowed" : "" }`} disabled={loading}>
               LOGIN
             </button>
             <p className="text-[13px] text-slate-800 mt-3">

@@ -1,7 +1,12 @@
 import React from "react";
 import { addThousandSeperator } from "../../utils/helper";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 const CustomTooltip = ({ active, payload }) => {
+
+  const {user} = useContext(UserContext);
+
   if (active && payload && payload.length) {
     return (
       <div className="bg-white shadow-md rounded-lg p-2 border border-gray-300">
@@ -11,7 +16,7 @@ const CustomTooltip = ({ active, payload }) => {
         <p className="text-sm text-gray-600">
           Amount:{" "}
           <span className="text-sm font-medium text-gray-900">
-            ${addThousandSeperator(payload[0].value)}
+            {user?.preferences?.currencySymbol || ''}{addThousandSeperator(payload[0].value)}
           </span>
         </p>
       </div>
