@@ -34,7 +34,7 @@ router.get("/", async (req, res) => {
       new Map(formatted.map((c) => [c.currencyCode, c])).values()
     ).sort((a, b) => a.currencyCode.localeCompare(b.currencyCode));
 
-    cachedCurrencies = unique;Yh
+    cachedCurrencies = unique;
 
     res.json(unique);
   } catch (err) {

@@ -31,4 +31,3 @@ exports.closeAccount = async (req, res) => {
   }
 };
 
-//    "imageUrl": "http://localhost:8000/uploads/1756144574226-coder-anime.jpg"
