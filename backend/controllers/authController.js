@@ -21,6 +21,10 @@ exports.updateUserInfo = async (req, res) => {
     if (fullName) user.fullName = fullName;
     if (email) user.email = email;
 
+    if (req.body.country) user.country = req.body.country;
+    if (req.body.currencyCode) user.currencyCode = req.body.currencyCode;
+    if (req.body.currencySymbol) user.currencySymbol = req.body.currencySymbol
+
     if (preferences) {
       user.preferences = {
         ...user.preferences,  // keep existing preferences
@@ -36,6 +40,7 @@ exports.updateUserInfo = async (req, res) => {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
+
 
 exports.registerUser = async (req, res) => {
   if (!req.body) {
